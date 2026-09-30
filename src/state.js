@@ -2,7 +2,7 @@ const fs=require("fs");
 const path=require("path");
 const DEFAULTS={version:1,activeWorkspaceId:"personal",workspaces:[
 {id:"personal",name:"Personal",icon:"P"},{id:"work",name:"Work",icon:"W"},{id:"research",name:"Research",icon:"R"}],
-tabs:[],recentlyClosed:[],activeByWorkspace:{},splitByWorkspace:{}};
+tabs:[],recentlyClosed:[],resourcePolicy:{preset:"balanced",warmTabs:8,ramTargetMB:2048,autoSleepMinutes:30,autoSleep:true,backgroundThrottling:true},activeByWorkspace:{},splitByWorkspace:{}};
 function normalize(raw={}){
 const s={...DEFAULTS,...raw};
 s.workspaces=Array.isArray(raw.workspaces)&&raw.workspaces.length?raw.workspaces:DEFAULTS.workspaces;

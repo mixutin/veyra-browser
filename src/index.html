@@ -1,20 +1,118 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'"><title>Veyra</title><link rel="stylesheet" href="styles.css"></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'">
+  <title>Veyra</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
 <div class="app">
-  <aside class="rail"><div class="logo">V</div><div id="workspaceRail" class="workspace-rail"></div><button id="newWorkspace" class="rail-btn add" title="New workspace">＋</button><div class="grow"></div><button class="rail-btn" title="Settings">⚙</button></aside>
+  <aside class="rail">
+    <div class="logo">V</div>
+    <div id="workspaceRail" class="workspace-rail"></div>
+    <button id="newWorkspace" class="rail-btn add" title="New workspace">＋</button>
+    <div class="grow"></div>
+    <button id="openControlRail" class="rail-btn" title="Veyra Control">◒</button>
+    <button class="rail-btn" title="Settings">⚙</button>
+  </aside>
   <aside class="sidebar">
-    <div class="space"><div><small>WORKSPACE</small><strong id="workspaceName">Personal</strong></div><button id="workspaceMenu">•••</button></div>
-    <button id="newTab" class="newtab">＋ New tab <kbd>Ctrl T</kbd></button>
-    <div class="label">OPEN TABS</div><div id="tabs" class="tabs"></div>
-    <button id="shield" class="shield"><span><i>◇</i><b>Veyra Shield</b></span><span id="shieldStats" class="green">ON</span></button>
+    <div class="space">
+      <div><small>SPACE</small><strong id="workspaceName">Personal</strong></div>
+      <button id="workspaceMenu">•••</button>
+    </div>
+    <button id="newTab" class="newtab"><span>＋ New tab</span><kbd>Ctrl T</kbd></button>
+    <div class="label">TABS</div>
+    <div id="tabs" class="tabs"></div>
+    <div class="side-status">
+      <button id="openControl" class="status-row">
+        <span><i class="control-dot"></i><b>Veyra Control</b></span>
+        <span id="resourceMini">—</span>
+      </button>
+      <button id="shield" class="status-row shield">
+        <span><i>◇</i><b>Shield</b></span>
+        <span id="shieldStats" class="green">ON</span>
+      </button>
+    </div>
   </aside>
   <main>
-    <header class="toolbar"><div class="nav"><button id="back">←</button><button id="forward">→</button><button id="reload">↻</button></div><div class="omnibox"><span class="lock">◇</span><input id="url" placeholder="Search or enter address" autocomplete="off"><kbd>Ctrl L</kbd></div><button id="bookmark" class="tool" title="Bookmark page">☆</button><button id="split" class="tool" title="Split view">▦</button><button id="cmd" class="tool" title="Command palette">⌘</button></header>
-    <section id="home" class="home"><div class="hero"><div class="kicker">VEYRA / FAST · PRIVATE · YOURS</div><h1>The browser<br>you keep open.</h1><p>Strong blocking, calmer tabs, real workspaces and migration that doesn’t punish you for switching.</p><div class="search"><span>⌕</span><input id="homeSearch" placeholder="Search with Brave Search"><kbd>/</kbd></div><div class="actions"><button id="migrate">⇄ Import browser data</button><button id="splitHome">▦ Open split view</button><button id="paletteBtn">⌘ Commands</button></div><div id="migration" class="migration hidden"></div></div><div class="cards"><article><span>◇</span><b>Shield</b><p>Ads, trackers and cosmetic clutter blocked before they reach you.</p></article><article><span>◫</span><b>Spaces</b><p>Separate contexts for personal, work and research without tab soup.</p></article><article><span>▦</span><b>Split</b><p>Two real pages side by side with one shortcut.</p></article><article><span>⇄</span><b>Move in</b><p>Bring bookmarks and history from Firefox and Chromium browsers.</p></article></div><div class="bookmarks-block"><div class="block-head"><div><small>QUICK ACCESS</small><h2>Your bookmarks</h2></div><button id="refreshBookmarks">↻</button></div><div id="bookmarksGrid" class="bookmarks-grid"></div></div></section>
+    <header class="toolbar">
+      <div class="nav"><button id="back">←</button><button id="forward">→</button><button id="reload">↻</button></div>
+      <div class="omnibox"><span class="lock">◇</span><input id="url" placeholder="Search or enter address" autocomplete="off"><kbd>Ctrl L</kbd></div>
+      <button id="bookmark" class="tool" title="Bookmark page">☆</button>
+      <button id="split" class="tool" title="Split view">▦</button>
+      <button id="cmd" class="tool" title="Command palette">⌘</button>
+    </header>
+    <section id="home" class="home">
+      <div class="hero">
+        <div class="kicker"><span class="pulse"></span> GAMING · PRIVACY · CONTROL</div>
+        <h1>Play. Browse.<br><em>Stay light.</em></h1>
+        <p>Veyra is a gaming-first privacy browser that keeps tabs, trackers, and background resource use under control.</p>
+        <div class="search"><span>⌕</span><input id="homeSearch" placeholder="Search with Brave Search"><kbd>/</kbd></div>
+        <div class="hero-actions">
+          <button id="gameMode" class="primary">◒ Game Mode</button>
+          <button id="migrate">⇄ Move into Veyra</button>
+          <button id="splitHome">▦ Split view</button>
+        </div>
+      </div>
+      <div class="dashboard">
+        <button id="dashboardControl" class="dash-card performance">
+          <div class="dash-head"><span>Veyra Control</span><span id="resourceMode">BALANCED</span></div>
+          <strong id="resourceRam">— MB</strong>
+          <small id="resourceCpu">—% CPU · — loaded tabs</small>
+          <div class="meter"><span id="ramMeter"></span></div>
+        </button>
+        <article class="dash-card"><div class="dash-head"><span>Shield</span><span class="safe">ACTIVE</span></div><strong id="homeBlocked">0</strong><small>ads & trackers blocked</small></article>
+        <article class="dash-card"><div class="dash-head"><span>Quick flow</span><span>CTRL K</span></div><strong>Command first</strong><small>tabs, splits, sleep, migration</small></article>
+      </div>
+      <div id="migration" class="migration hidden"></div>
+      <div class="bookmarks-block">
+        <div class="block-head"><div><small>QUICK ACCESS</small><h2>Bookmarks</h2></div><button id="refreshBookmarks">↻</button></div>
+        <div id="bookmarksGrid" class="bookmarks-grid"></div>
+      </div>
+    </section>
   </main>
 </div>
-<div id="palette" class="overlay hidden"><div class="palette"><input id="commandInput" placeholder="Type a command…"><div class="command-list"><button data-command="new">New tab <kbd>Ctrl T</kbd></button><button data-command="reopen">Reopen closed tab <kbd>Ctrl ⇧ T</kbd></button><button data-command="split">Toggle split view <kbd>Ctrl ⇧ S</kbd></button><button data-command="workspace">New workspace</button><button data-command="sleep">Sleep inactive tabs</button><button data-command="bookmark">Bookmark current page</button><button data-command="migrate">Import browser data</button><button data-command="shield">Toggle Veyra Shield</button><button data-command="focus">Focus address bar <kbd>Ctrl L</kbd></button></div></div></div>
+
+<div id="controlPanel" class="drawer-wrap hidden">
+  <button id="controlScrim" class="drawer-scrim" aria-label="Close Veyra Control"></button>
+  <aside class="drawer">
+    <div class="drawer-head"><div><small>PERFORMANCE</small><h2>Veyra Control</h2></div><button id="closeControl">×</button></div>
+    <p class="drawer-copy">Keep the browser useful while leaving CPU and RAM for the game. Targets are soft limits: Veyra sleeps inactive tabs instead of killing active pages.</p>
+    <div class="metric-grid">
+      <div><small>RAM</small><strong id="panelRam">—</strong></div>
+      <div><small>CPU</small><strong id="panelCpu">—</strong></div>
+      <div><small>LOADED</small><strong id="panelLoaded">—</strong></div>
+      <div><small>SLEEPING</small><strong id="panelSleeping">—</strong></div>
+    </div>
+    <div class="section"><label>Preset</label><div class="presets"><button data-preset="gaming">Game</button><button data-preset="balanced">Balanced</button><button data-preset="saver">Saver</button></div></div>
+    <div class="section range-row"><div><label for="ramTarget">RAM target</label><span id="ramTargetValue">2048 MB</span></div><input id="ramTarget" type="range" min="512" max="8192" step="256" value="2048"></div>
+    <div class="section range-row"><div><label for="warmTabs">Warm tabs</label><span id="warmTabsValue">8</span></div><input id="warmTabs" type="range" min="1" max="16" step="1" value="8"></div>
+    <div class="section range-row"><div><label for="sleepMinutes">Auto-sleep after</label><span id="sleepMinutesValue">30 min</span></div><input id="sleepMinutes" type="range" min="1" max="60" step="1" value="30"></div>
+    <label class="toggle-row"><span><b>Auto-sleep inactive tabs</b><small>Release renderer memory when tabs are idle.</small></span><input id="autoSleep" type="checkbox" checked></label>
+    <div class="drawer-actions"><button id="sleepNow">Sleep inactive now</button></div>
+  </aside>
+</div>
+
+<div id="palette" class="overlay hidden">
+  <div class="palette">
+    <input id="commandInput" placeholder="Type a command…">
+    <div class="command-list">
+      <button data-command="new">New tab <kbd>Ctrl T</kbd></button>
+      <button data-command="reopen">Reopen closed tab <kbd>Ctrl ⇧ T</kbd></button>
+      <button data-command="game">Enable Game Mode</button>
+      <button data-command="control">Open Veyra Control</button>
+      <button data-command="split">Toggle split view <kbd>Ctrl ⇧ S</kbd></button>
+      <button data-command="workspace">New workspace</button>
+      <button data-command="sleep">Sleep inactive tabs</button>
+      <button data-command="bookmark">Bookmark current page</button>
+      <button data-command="migrate">Import browser data</button>
+      <button data-command="shield">Toggle Veyra Shield</button>
+      <button data-command="focus">Focus address bar <kbd>Ctrl L</kbd></button>
+    </div>
+  </div>
+</div>
 <script src="renderer.js"></script>
-</body></html>
+</body>
+</html>

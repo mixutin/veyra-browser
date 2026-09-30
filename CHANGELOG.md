@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0-alpha.1 — Gaming + resource control
+
+- Repositioned Veyra as a gaming-first privacy browser and Opera GX alternative.
+- Rebuilt the browser chrome with a sleeker, lower-noise dark UI.
+- Added **Veyra Control** with live application RAM and CPU metrics.
+- Added Game, Balanced, and Saver resource presets.
+- Added configurable soft RAM target, warm-tab limit, and auto-sleep timer.
+- Added automatic sleeping for least-recently-used inactive tabs.
+- Added Ctrl/Cmd+Shift+G Game Mode shortcut.
+- Added a live performance dashboard on the new-tab page.
+- Added Windows NSIS installer, portable executable, and ZIP build targets.
+- Added automatic release upload for Linux, Windows, and macOS artifacts.
+- Added resource-controller unit tests.
+
 ## 0.2.0 — Alpha browser core
 
 - Added crash/restart-safe tab and workspace persistence.

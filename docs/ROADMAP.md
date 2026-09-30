@@ -25,8 +25,9 @@
 - [ ] Sidebar web apps
 - [ ] Tab peek
 - [x] Manual inactive-tab sleeping
-- [ ] Automatic memory-pressure tab sleeping/freezing
-- [ ] Recently closed tabs
+- [x] Automatic warm-tab / soft-RAM-budget sleeping
+- [ ] OS memory-pressure-aware freezing
+- [x] Recently closed tabs
 - [ ] Fuzzy tab switcher
 - [ ] Fully remappable shortcuts
 - [ ] Downloads panel
@@ -35,8 +36,16 @@
 - [ ] Picture-in-picture controls
 - [ ] Theme system
 
-## 0.3 — Veyra Shield
+## 0.3 — Gaming control + Veyra Shield
 
+- [x] Veyra Control live RAM/CPU dashboard
+- [x] Game / Balanced / Saver presets
+- [x] Configurable RAM target and warm-tab limit
+- [x] Configurable inactive-tab auto-sleep timer
+- [x] Game Mode keyboard shortcut
+- [ ] Per-tab resource inspector
+- [ ] Network bandwidth limiter
+- [ ] Per-site media autoplay / animation controls
 - [ ] Filter-list updater/cache
 - [ ] Per-site shield toggles
 - [x] Blocked request counters
@@ -68,7 +77,7 @@
 - [ ] Extension compatibility proof of concept
 - [ ] Signed automatic updater
 - [ ] Reproducible release builds
-- [ ] Windows package
+- [x] Windows NSIS + portable + ZIP targets
 - [x] Linux .deb + AppImage packages
 - [ ] macOS package
 - [ ] Security regression suite

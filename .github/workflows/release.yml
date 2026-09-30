@@ -3,28 +3,65 @@ on:
   workflow_dispatch:
   push:
     tags: ["v*"]
+
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            command: npm run dist:linux
+            artifact: veyra-linux
+          - os: windows-latest
+            command: npm run dist:win
+            artifact: veyra-windows
+          - os: macos-latest
+            command: npm run dist:mac
+            artifact: veyra-macos
     runs-on: ${{ matrix.os }}
     env:
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: {node-version: 22, cache: npm}
+        with:
+          node-version: 22
+          cache: npm
       - run: npm ci
       - run: npm run verify
-      - run: npm run dist -- --publish never
+      - run: ${{ matrix.command }}
       - uses: actions/upload-artifact@v4
         with:
-          name: veyra-${{ runner.os }}
+          name: ${{ matrix.artifact }}
           path: |
             dist/*.AppImage
             dist/*.deb
             dist/*.exe
-            dist/*.dmg
             dist/*.zip
+            dist/*.dmg
+            dist/*.blockmap
+            dist/latest*.yml
           if-no-files-found: error
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+      - name: Create or update prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          gh release view "$tag" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1 || gh release create "$tag" --repo "${GITHUB_REPOSITORY}" --title "Veyra $tag" --prerelease --generate-notes
+          (cd release-assets && sha256sum * > SHA256SUMS.txt)
+          find release-assets -maxdepth 1 -type f -print
+          gh release upload "$tag" release-assets/* --repo "${GITHUB_REPOSITORY}" --clobber

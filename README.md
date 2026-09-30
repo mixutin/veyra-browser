@@ -1,31 +1,68 @@
 # Veyra Browser
 
-> **A modern, privacy-first browser for people who actually live in the web.**
+> **A gaming-first privacy browser that leaves more of your PC for the game.**
 
-Veyra is an open browser project combining the privacy ambitions of Brave with the workflow ideas that make modern browsers such as Zen compelling: vertical tabs, workspaces, split views, command-first navigation, sane defaults, and a calm UI.
+Veyra is an independent open-source browser project for people who like the resource-control idea behind gaming browsers such as Opera GX, but want a calmer interface, strong tracker/ad blocking, keyboard-first workflows, and easy migration from Firefox or Chromium browsers.
 
-The goal is not to reskin Chromium. The goal is to build a browser that is easier to migrate to, harder to track, faster to operate, and less cluttered.
+The design target is simple: **less browser tax, less tracking, less clutter.**
 
-## What works today
+## Veyra 0.3 alpha
 
-- Real multi-tab browsing using Electron `WebContentsView`
-- Crash/restart-safe session persistence
-- Personal, Work, Research, and user-created workspaces
+### Veyra Control
+
+Veyra now exposes real browser resource controls instead of decorative gauges:
+
+- Live Veyra RAM and CPU usage from Electron process metrics
+- **Game Mode** — 3 warm tabs, 1 GB soft RAM target, aggressive auto-sleep
+- **Balanced** — 8 warm tabs, 2 GB soft RAM target
+- **Saver** — 4 warm tabs, 768 MB soft RAM target
+- Custom RAM target from 512 MB to 8 GB
+- Custom warm-tab limit
+- Configurable inactive-tab sleep timer
+- One-click **Sleep inactive tabs**
+- Sleeping tabs are restored lazily when selected
+- Active and split-view tabs are never auto-slept
+
+The RAM target is intentionally a **soft target**, not a fake hard memory cap. Veyra reacts by unloading inactive Chromium renderers rather than terminating the page you are actively using.
+
+### Privacy
+
+- Ghostery ads + tracking engine
+- Cosmetic filtering
+- Live blocked-request stats
+- Global Privacy Control (`Sec-GPC: 1`)
+- `DNT: 1`
+- Tracking-query cleanup for common parameters such as `utm_*`, `fbclid`, and `gclid`
+- Sandboxed remote web content
+- Context isolation
+- Node.js disabled in remote pages
+- No sponsored new-tab feed
+- No Veyra account requirement
+
+### Browser workflow
+
+- Vertical tabs
+- Persistent sessions
+- Personal, Work, Research, and custom workspaces
 - Real two-page split view
-- Lazy-restored tabs plus manual sleep for inactive tabs
-- Ghostery ads + tracking blocking with cosmetic filtering
-- Live blocked-request statistics
-- Global Privacy Control + DNT request headers
-- Tracking-parameter cleaning on top-level navigation
-- Brave Search from the omnibox/new-tab search
-- Vertical tabs and command palette
-- Quick bookmarks on the new-tab page + Ctrl/Cmd+D
-- Local browsing-history store
-- Firefox, Chrome, Chromium, Brave, and Edge profile discovery
-- Bookmark **and history** import
-- Hardened renderer defaults: sandbox, context isolation and no Node integration
+- Recently closed tabs
+- Command palette
+- Quick bookmarks
+- Local browsing history
+- Brave Search default
+- Standard browser shortcuts
+- Lazy tab restore and sleeping
+- Popups redirected into tabs
 
-## Run it
+### Move into Veyra
+
+Current migration support discovers and imports **bookmarks + history** from Firefox, Chrome, Chromium, Brave, and Microsoft Edge.
+
+Open-tab/session migration, search engines, selected preferences, extension compatibility reporting, and secure password migration remain on the roadmap.
+
+## Install / run
+
+### Development
 
 ```bash
 git clone https://github.com/mixutin/veyra-browser
@@ -36,70 +73,65 @@ npm start
 
 Node.js 20+ is recommended.
 
-### Build installable Linux packages
+### Linux
 
 ```bash
 npm run dist:linux
 ```
 
-This creates an AppImage and Debian package in `dist/`. On Ubuntu/Debian, prefer the `.deb`: its post-install hook configures Electron's Chromium sandbox helper with the required root ownership and SUID permission. Veyra does **not** ship a `--no-sandbox` default.
+Builds an AppImage and Debian / Ubuntu `.deb`. The Debian package configures Electron's Chromium sandbox helper during installation. Veyra does **not** ship with `--no-sandbox` enabled.
 
-Tagged releases and manual workflow runs build Linux, Windows, and macOS artifacts in GitHub Actions.
+### Windows
 
-## The end-state
+```powershell
+npm run dist:win
+```
 
-Veyra is aiming at a **Chromium-class daily driver**, not an Electron toy. Electron is being used for the fast product-shell stage while we prove interaction design and browser services. The long-term platform work is documented in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Builds on a Windows runner:
 
-### Privacy
+- NSIS installer
+- Portable `.exe`
+- `.zip` package
 
-- Aggressive ads + tracker blocking
-- EasyList/EasyPrivacy-compatible rules
-- Cosmetic filtering
-- Tracking-query stripping
-- HTTPS upgrades
-- Bounce-tracking mitigation
-- Anti-fingerprinting defenses
-- Per-site shield controls
-- Third-party cookie controls
-- Private and ephemeral workspaces
-- No sponsored new-tab clutter
-- No required Veyra account
+### macOS
 
-### Power-user UX
+```bash
+npm run dist:mac
+```
 
-- Vertical or horizontal tabs
-- Workspaces and tab groups
-- Split view
-- Sidebar web apps
-- Tab sleeping/freezing
-- Peek tabs
-- Command palette everywhere
-- Fuzzy tab/history/bookmark search
-- Fully remappable shortcuts
-- Session snapshots
-- Reader/focus modes
-- Screenshot + annotation
-- Copy-clean-link
-- Picture-in-picture improvements
-- Theme packs and custom CSS variables
+Builds DMG and ZIP packages.
 
-### Migration
+Tagged releases run the full Linux + Windows + macOS matrix and automatically upload produced packages to the GitHub prerelease.
 
-The migration wizard is a first-class feature, not an afterthought.
+## Keyboard flow
 
-Current alpha: bookmarks and history from Firefox, Chrome, Chromium, Brave, and Edge profiles.
+| Action | Shortcut |
+| --- | --- |
+| Address bar | `Ctrl/Cmd + L` |
+| New tab | `Ctrl/Cmd + T` |
+| Close tab | `Ctrl/Cmd + W` |
+| Reopen tab | `Ctrl/Cmd + Shift + T` |
+| Cycle tabs | `Ctrl/Cmd + Tab` |
+| Bookmark | `Ctrl/Cmd + D` |
+| Command palette | `Ctrl/Cmd + K` |
+| Split view | `Ctrl/Cmd + Shift + S` |
+| **Game Mode** | `Ctrl/Cmd + Shift + G` |
+| New workspace | `Ctrl/Cmd + Shift + N` |
+| Workspace 1–9 | `Alt + 1–9` |
 
-Planned next: open tabs/session import, search engines, selected settings, extension compatibility reporting, and password migration through OS-supported secure flows.
+## Architecture direction
 
-## Why not simply fork Brave today?
+Veyra is currently proving the product layer on Electron/Chromium: browser chrome, tabs, workspaces, migration, privacy services, resource controls, and packaging.
 
-A production Chromium fork is a very large continuously-maintained security project. Starting with a browser shell lets Veyra validate UX, privacy services and migration without pretending a one-off Chromium snapshot is safe. Once the product model is stable, the project can move browser-engine integration toward Chromium/CEF with a defined rebasing and security-update process.
+The long-term goal is a maintained **Chromium-class daily driver** with extension compatibility, rapid Chromium security rebases, signed updates, stronger per-site privacy controls, and a dedicated browser-engine integration rather than pretending an Electron shell alone equals a production Chromium fork.
 
-## Project status
+See [ARCHITECTURE.md](docs/ARCHITECTURE.md) and [ROADMAP.md](docs/ROADMAP.md).
 
-**0.2 alpha — active development.** The browser is runnable and packageable, but it is not yet a hardened Chromium-fork replacement. Do not yet use Veyra as your only browser for sensitive accounts.
+## Status
 
-See [ROADMAP](docs/ROADMAP.md), [ARCHITECTURE](docs/ARCHITECTURE.md), [CONTRIBUTING](CONTRIBUTING.md), and [SECURITY](SECURITY.md).
+**0.3 alpha.** Veyra is runnable and packageable, but it is not yet a hardened replacement for an established browser on sensitive accounts.
+
+Veyra is independent and is not affiliated with Opera, Brave, Mozilla, Google, or Microsoft. Product names mentioned above belong to their respective owners.
 
 ## License
 
