@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0-alpha.1 — Gaming + resource control
+## 0.3.0-alpha.2 — Gaming + resource control
 
 - Repositioned Veyra as a gaming-first privacy browser and Opera GX alternative.
 - Rebuilt the browser chrome with a sleeker, lower-noise dark UI.
@@ -12,6 +12,7 @@
 - Added a live performance dashboard on the new-tab page.
 - Added Windows NSIS installer, portable executable, and ZIP build targets.
 - Added automatic release upload for Linux, Windows, and macOS artifacts.
+- Disabled electron-builder implicit publishing on tags so packaging never fails after artifacts are built.
 - Added resource-controller unit tests.
 
 ## 0.2.0 — Alpha browser core
