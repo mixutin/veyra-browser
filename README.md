@@ -9,15 +9,20 @@ The goal is not to reskin Chromium. The goal is to build a browser that is easie
 ## What works today
 
 - Real multi-tab browsing using Electron `WebContentsView`
-- Persistent isolated Veyra browser profile
-- Ghostery's ads + tracking blocking engine at the network layer
+- Crash/restart-safe session persistence
+- Personal, Work, Research, and user-created workspaces
+- Real two-page split view
+- Lazy-restored tabs plus manual sleep for inactive tabs
+- Ghostery ads + tracking blocking with cosmetic filtering
+- Live blocked-request statistics
+- Global Privacy Control + DNT request headers
+- Tracking-parameter cleaning on top-level navigation
 - Brave Search from the omnibox/new-tab search
-- Vertical-tab shell
-- Command palette
-- Ctrl/Cmd+L, Ctrl/Cmd+T and Ctrl/Cmd+K workflows
-- Popups/new windows redirected into tabs
-- Automatic browser-profile discovery
-- Bookmark import from Firefox, Chrome, Chromium, Brave and Edge
+- Vertical tabs and command palette
+- Quick bookmarks on the new-tab page + Ctrl/Cmd+D
+- Local browsing-history store
+- Firefox, Chrome, Chromium, Brave, and Edge profile discovery
+- Bookmark **and history** import
 - Hardened renderer defaults: sandbox, context isolation and no Node integration
 
 ## Run it
@@ -30,6 +35,16 @@ npm start
 ```
 
 Node.js 20+ is recommended.
+
+### Build installable Linux packages
+
+```bash
+npm run dist:linux
+```
+
+This creates an AppImage and Debian package in `dist/`. On Ubuntu/Debian, prefer the `.deb`: its post-install hook configures Electron's Chromium sandbox helper with the required root ownership and SUID permission. Veyra does **not** ship a `--no-sandbox` default.
+
+Tagged releases and manual workflow runs build Linux, Windows, and macOS artifacts in GitHub Actions.
 
 ## The end-state
 
@@ -72,9 +87,9 @@ Veyra is aiming at a **Chromium-class daily driver**, not an Electron toy. Elect
 
 The migration wizard is a first-class feature, not an afterthought.
 
-Current prototype: bookmarks from Firefox/Chromium-family profiles.
+Current alpha: bookmarks and history from Firefox, Chrome, Chromium, Brave, and Edge profiles.
 
-Planned: history, open tabs, search engines, selected settings, extensions where compatible, and password migration through OS-supported secure flows.
+Planned next: open tabs/session import, search engines, selected settings, extension compatibility reporting, and password migration through OS-supported secure flows.
 
 ## Why not simply fork Brave today?
 
@@ -82,7 +97,7 @@ A production Chromium fork is a very large continuously-maintained security proj
 
 ## Project status
 
-**0.1 prototype — active development.** Do not yet use Veyra as your only browser for sensitive accounts.
+**0.2 alpha — active development.** The browser is runnable and packageable, but it is not yet a hardened Chromium-fork replacement. Do not yet use Veyra as your only browser for sensitive accounts.
 
 See [ROADMAP](docs/ROADMAP.md), [ARCHITECTURE](docs/ARCHITECTURE.md), [CONTRIBUTING](CONTRIBUTING.md), and [SECURITY](SECURITY.md).
 

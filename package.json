@@ -1,1 +1,35 @@
-{"name":"veyra-browser","version":"0.1.0","description":"A privacy-first Chromium-class browser experiment with modern power-user UX.","main":"main.js","type":"commonjs","scripts":{"start":"electron .","dev":"electron . --dev","check":"node --check main.js && node --check src/privacy.js && node --check src/migration.js && node --check src/renderer.js"},"devDependencies":{"@ghostery/adblocker-electron":"2.18.2","electron":"44.5.1"},"license":"MPL-2.0","engines":{"node":">=20"}}
+{
+  "name":"veyra-browser",
+  "version":"0.2.0",
+  "description":"A privacy-first Chromium-class browser with modern workspaces, strong blocking and painless migration.",
+  "author":{"name":"Mixutin","email":"mixutin@users.noreply.github.com"},
+  "homepage":"https://github.com/mixutin/veyra-browser",
+  "repository":{"type":"git","url":"https://github.com/mixutin/veyra-browser.git"},
+  "desktopName":"Veyra",
+  "main":"main.js",
+  "type":"commonjs",
+  "scripts":{
+    "start":"electron .",
+    "dev":"electron . --dev",
+    "check":"node --check main.js && node --check src/state.js && node --check src/privacy.js && node --check src/migration.js && node --check src/library.js && node --check src/preload.js && node --check src/renderer.js",
+    "test":"node --test",
+    "verify":"npm run check && npm test",
+    "dist":"electron-builder",
+    "dist:linux":"electron-builder --linux AppImage deb"
+  },
+  "dependencies":{"@ghostery/adblocker-electron":"2.18.2"},
+  "devDependencies":{"electron":"44.5.1","electron-builder":"26.15.3"},
+  "license":"MPL-2.0",
+  "engines":{"node":">=20"},
+  "build":{
+    "appId":"io.github.mixutin.veyra",
+    "productName":"Veyra",
+    "asar":true,
+    "files":["main.js","src/**/*","package.json"],
+    "directories":{"output":"dist"},
+    "linux":{"target":["AppImage","deb"],"category":"Network","syncDesktopName":true},
+    "deb":{"afterInstall":"build/deb-after-install.sh"},
+    "win":{"target":["nsis"]},
+    "mac":{"target":["dmg","zip"],"category":"public.app-category.productivity"}
+  }
+}

@@ -12,18 +12,20 @@
 - [x] Firefox/Chrome/Chromium/Brave/Edge profile detection
 - [x] Bookmark migration
 - [x] Linux-first developer workflow
-- [ ] Persistent tab/session restore
-- [ ] History database and UI
-- [ ] Bookmark UI
+- [x] Persistent tab/session restore
+- [x] Local history database
+- [x] Bookmark UI / new-tab quick access
+- [ ] Full history UI
 
 ## 0.2 — The workflow release
 
-- [ ] Workspaces
+- [x] Workspaces
 - [ ] Tab groups
-- [ ] Split view
+- [x] Split view
 - [ ] Sidebar web apps
 - [ ] Tab peek
-- [ ] Tab sleeping/freezing
+- [x] Manual inactive-tab sleeping
+- [ ] Automatic memory-pressure tab sleeping/freezing
 - [ ] Recently closed tabs
 - [ ] Fuzzy tab switcher
 - [ ] Fully remappable shortcuts
@@ -37,8 +39,10 @@
 
 - [ ] Filter-list updater/cache
 - [ ] Per-site shield toggles
-- [ ] Blocked request counters
-- [ ] Tracking-query removal
+- [x] Blocked request counters
+- [x] Top-level tracking-query removal
+- [x] Global Privacy Control + DNT headers
+- [ ] Subresource tracking-query removal
 - [ ] HTTPS upgrades
 - [ ] Cookie partition controls
 - [ ] Anti-fingerprinting modes
@@ -50,7 +54,7 @@
 ## 0.4 — Migration that does not suck
 
 - [x] Bookmark import prototype
-- [ ] Import history
+- [x] Import history
 - [ ] Import open tabs/session
 - [ ] Import search engines
 - [ ] Import selected preferences
@@ -65,7 +69,7 @@
 - [ ] Signed automatic updater
 - [ ] Reproducible release builds
 - [ ] Windows package
-- [ ] Linux packages/AppImage
+- [x] Linux .deb + AppImage packages
 - [ ] macOS package
 - [ ] Security regression suite
 - [ ] Automated upstream Chromium CVE/rebase workflow
