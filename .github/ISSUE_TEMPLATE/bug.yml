@@ -1,0 +1,17 @@
+name: Bug report
+description: Report a reproducible Veyra problem
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include steps, expected result and actual result.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      placeholder: Ubuntu 26.04, Windows 11, macOS...
